@@ -17,7 +17,21 @@ import ru.skillbranch.sbdelivery.screens.dishes.logic.DishesFeature
 @Composable
 fun DishesScreen(state: DishesFeature.State, accept: (DishesFeature.Msg) -> Unit) {
     when (state.list) {
-        is DishesUiState.Error -> TODO()
+        is DishesUiState.Error -> Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ){
+            Column {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_ufo_error),
+                    contentDescription = "error",
+                    modifier = Modifier.requiredSize(200.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Ошибка (", color = MaterialTheme.colors.error)
+            }
+        }
 
         is DishesUiState.Empty -> Box(
             contentAlignment = Alignment.Center,

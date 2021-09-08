@@ -90,8 +90,8 @@ fun DishContent(dish: DishContent, count: Int, accept: (DishFeature.Msg) -> Unit
 
         DishPrice(price = dish.price, oldPrice = dish.oldPrice,
             count = count,
-            onIncrement = { /*TODO*/ },
-            onDecrement = { /*TODO*/ },
+            onIncrement = { accept(DishFeature.Msg.IncrementCount) },
+            onDecrement = { accept(DishFeature.Msg.DecrementCount) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .constrainAs(price) {
@@ -101,7 +101,7 @@ fun DishContent(dish: DishContent, count: Int, accept: (DishFeature.Msg) -> Unit
                 })
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { accept(DishFeature.Msg.AddToCart(dish.id, count)) },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.secondary,
                 contentColor = MaterialTheme.colors.onSecondary
