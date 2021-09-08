@@ -48,7 +48,7 @@ fun DishesFeature.State.selfReduce(msg: DishesFeature.Msg): Pair<DishesFeature.S
                 if (msg.dishes.isEmpty()) DishesUiState.Empty else DishesUiState.Value(msg.dishes)
             copy(list = dishes, suggestions = emptyMap()) to emptySet()
         }
-        is DishesFeature.Msg.ShowError -> TODO()
+        is DishesFeature.Msg.ShowError -> copy(list = DishesUiState.Error) to emptySet()
         is DishesFeature.Msg.ShowLoading -> copy(list = DishesUiState.Loading) to emptySet()
         is DishesFeature.Msg.ShowSuggestions -> copy(suggestions = msg.suggestions) to emptySet()
 
