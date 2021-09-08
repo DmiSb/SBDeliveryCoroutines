@@ -162,6 +162,4 @@ sealed class Command {
     //Android specific commands finish() startForResult, etc
 }
 
-interface IEffectHandler<E, M> {
-    suspend fun handle(effect: E, commit: (M) -> Unit)
-}
+
