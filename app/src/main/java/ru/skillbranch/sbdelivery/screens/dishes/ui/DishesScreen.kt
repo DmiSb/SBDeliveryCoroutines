@@ -16,7 +16,7 @@ import ru.skillbranch.sbdelivery.screens.dishes.logic.DishesFeature
 
 @Composable
 fun DishesScreen(state: DishesFeature.State, accept: (DishesFeature.Msg) -> Unit) {
-    when (state.list) {
+    when (state.state) {
         is DishesUiState.Error -> Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
@@ -57,7 +57,7 @@ fun DishesScreen(state: DishesFeature.State, accept: (DishesFeature.Msg) -> Unit
             CircularProgressIndicator(color = MaterialTheme.colors.secondary)
         }
 
-        is DishesUiState.Value -> LazyGrid(items = state.list.dishes) {
+        is DishesUiState.Value -> LazyGrid(items = state.state.dishes) {
             DishItem(dish = it,
                 onClick = { dish -> accept(DishesFeature.Msg.ClickDish(dish.id, dish.title)) },
                 addToCart = { dish -> accept(DishesFeature.Msg.AddToCart(dish.id, dish.title)) })

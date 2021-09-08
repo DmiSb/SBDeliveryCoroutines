@@ -31,7 +31,7 @@ fun DishesFeature.State.selfReduce(msg: DishesFeature.Msg): Pair<DishesFeature.S
 
         is DishesFeature.Msg.SearchInput -> copy(input = msg.newInput) to emptySet()
 
-        is DishesFeature.Msg.SearchSubmit -> copy(list = DishesUiState.Loading) to setOf(
+        is DishesFeature.Msg.SearchSubmit -> copy(state = DishesUiState.Loading) to setOf(
             DishesFeature.Eff.SearchDishes(msg.query)
         ).toEffs()
 
@@ -46,10 +46,10 @@ fun DishesFeature.State.selfReduce(msg: DishesFeature.Msg): Pair<DishesFeature.S
         is DishesFeature.Msg.ShowDishes -> {
             val dishes =
                 if (msg.dishes.isEmpty()) DishesUiState.Empty else DishesUiState.Value(msg.dishes)
-            copy(list = dishes, suggestions = emptyMap()) to emptySet()
+            copy(state = dishes, suggestions = emptyMap()) to emptySet()
         }
-        is DishesFeature.Msg.ShowError -> copy(list = DishesUiState.Error) to emptySet()
-        is DishesFeature.Msg.ShowLoading -> copy(list = DishesUiState.Loading) to emptySet()
+        is DishesFeature.Msg.ShowError -> copy(state = DishesUiState.Error) to emptySet()
+        is DishesFeature.Msg.ShowLoading -> copy(state = DishesUiState.Loading) to emptySet()
         is DishesFeature.Msg.ShowSuggestions -> copy(suggestions = msg.suggestions) to emptySet()
 
         is DishesFeature.Msg.SuggestionSelect -> {
