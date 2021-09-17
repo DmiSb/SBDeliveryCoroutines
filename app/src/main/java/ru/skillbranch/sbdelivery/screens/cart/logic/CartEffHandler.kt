@@ -37,7 +37,7 @@ class CartEffHandler @Inject constructor(
             is CartFeature.Eff.RemoveItem -> {
                 repository.removeItem(effect.dishId)
                 updateCart()
-                notifyChannel.send(Eff.Notification.Text("${effect.title} удален из корзины"))
+                //notifyChannel.send(Eff.Notification.Text("${effect.title} удален из корзины"))
             }
             is CartFeature.Eff.SendOrder -> {
                 repository.clearCart()

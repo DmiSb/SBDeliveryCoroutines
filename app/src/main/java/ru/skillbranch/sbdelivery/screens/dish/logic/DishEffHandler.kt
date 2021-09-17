@@ -24,11 +24,12 @@ class DishEffHandler @Inject constructor(
             when (effect) {
                 is DishFeature.Eff.AddToCart -> {
                     repository.addToCart(effect.id, effect.count)
-                    val count = repository.cartCount()
-                    commit(Msg.UpdateCartCount(count))
+                    repository.cartCount()
+                        .let(Msg::UpdateCartCount)
+                        .also(commit)
                     notifyChannel.send(
                         Eff.Notification.Text(
-                            message = "В корзину добавлено ${count} товаров"
+                            message = "В корзину добавлено ${effect.count} товаров"
                         )
                     )
                 }
