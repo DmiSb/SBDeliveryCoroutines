@@ -28,7 +28,7 @@ class DishEffHandler @Inject constructor(
                     commit(Msg.UpdateCartCount(count))
                     notifyChannel.send(
                         Eff.Notification.Text(
-                            message = "В корзину добавлено ${effect.count} товаров"
+                            message = "В корзину добавлено ${count} товаров"
                         )
                     )
                 }

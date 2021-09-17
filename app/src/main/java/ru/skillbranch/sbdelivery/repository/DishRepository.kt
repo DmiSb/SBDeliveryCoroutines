@@ -28,9 +28,7 @@ class DishRepository @Inject constructor(
     override suspend fun addToCart(id: String, count: Int) {
         val dishCount = cartDao.dishCount(id) ?: 0
         if (dishCount > 0) cartDao.updateItemCount(id, dishCount + count)
-        else {
-            cartDao.addItem(CartItemPersist(dishId = id, count = count))
-        }
+        else cartDao.addItem(CartItemPersist(dishId = id, count = count))
     }
 
     override suspend fun cartCount(): Int = cartDao.cartCount() ?: 0

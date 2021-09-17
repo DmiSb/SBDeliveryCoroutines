@@ -80,7 +80,6 @@ object RootFeature {
 
             msg is Msg.AddToCart -> root to setOf(Eff.AddToCart(msg.id, msg.title))
 
-
             else -> root to emptySet()
         }
 }
