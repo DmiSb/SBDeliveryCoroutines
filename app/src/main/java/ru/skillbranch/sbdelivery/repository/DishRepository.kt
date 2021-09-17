@@ -8,7 +8,6 @@ import ru.skillbranch.sbdelivery.data.network.req.ReviewReq
 import ru.skillbranch.sbdelivery.data.network.res.ReviewRes
 import ru.skillbranch.sbdelivery.data.toDishContent
 import ru.skillbranch.sbdelivery.screens.dish.data.DishContent
-import java.util.*
 import javax.inject.Inject
 
 interface IDishRepository {
@@ -38,34 +37,17 @@ class DishRepository @Inject constructor(
 
     override suspend fun loadReviews(dishId: String): List<ReviewRes> {
         val reviews = mutableListOf<ReviewRes>()
-        try {
-            val resp = api.getReviews(dishId, 0, 10)
+        var offset = 0
+        while (true) {
+            val resp = api.getReviews(dishId, offset * 10, 10)
             if (resp.isSuccessful) {
+                offset++
                 reviews.addAll(resp.body()!!)
-            } else {
-                reviews.addAll(reviewsStub())
-            }
-        } catch (e: Exception) {
-            reviews.addAll(reviewsStub())
+            } else break
         }
         return reviews
     }
 
-    override suspend fun sendReview(id: String, rating: Int, review: String): ReviewRes {
-        return try {
-            api.sendReview(id, ReviewReq(rating, review))
-        } catch (e: Exception) {
-            ReviewRes("stubName", Date().time, rating, review)
-        }
-    }
-
-    private fun reviewsStub(): List<ReviewRes> {
-        val cal = Calendar.getInstance()
-        cal.set(2021, 8, 10)
-        return listOf(
-            ReviewRes("Глеб", cal.timeInMillis, 4, "Понравилось"),
-            ReviewRes("Алина", cal.timeInMillis - 5 * 60 * 60 * 1000, 1, "Не вкусно"),
-            ReviewRes("Иван", cal.timeInMillis + 2 * 60 * 60 * 1000, 3, "Что-то среднее")
-        )
-    }
+    override suspend fun sendReview(id: String, rating: Int, review: String): ReviewRes =
+        api.sendReview(id, ReviewReq(rating, review))
 }

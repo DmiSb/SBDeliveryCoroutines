@@ -1,6 +1,5 @@
 package ru.skillbranch.sbdelivery.screens.dishes.ui
 
-//import ru.skillbranch.sbdelivery.screens.root.NavigateCommand
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -244,7 +243,6 @@ fun IdleToolbarPreview() {
     AppTheme {
         DishesToolbar(DishesFeature.State(), 5, {}, {})
     }
-
 }
 
 @ExperimentalComposeUiApi
@@ -254,7 +252,6 @@ fun SearchToolbarPreview() {
     AppTheme {
         DishesToolbar(DishesFeature.State(input = "search test", isSearch = true), 0, {}, {})
     }
-
 }
 
 @ExperimentalComposeUiApi
@@ -274,5 +271,3 @@ fun SuggestionsToolbarPreview() {
     }
 
 }
-
-

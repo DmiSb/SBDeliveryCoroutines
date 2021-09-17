@@ -47,9 +47,8 @@ class DishEffHandler @Inject constructor(
                 is DishFeature.Eff.SendReview -> {
                     try {
                         val reviewRes = repository.sendReview(effect.id, effect.rating, effect.review)
-                        val reviews = effect.currReviews.toMutableList()
-                        reviews.add(reviewRes)
-                        commit(DishFeature.Msg.ShowReviews(reviews).toMsg())
+                        val newReviews = repository.loadReviews(effect.id) + reviewRes
+                        commit(DishFeature.Msg.ShowReviews(newReviews).toMsg())
                         notifyChannel.send(
                             Eff.Notification.Text(
                                 message = "Отзыв успешно отправлен"
@@ -69,8 +68,4 @@ class DishEffHandler @Inject constructor(
     }
 
     private fun DishFeature.Msg.toMsg(): Msg = Msg.Dish(this)
-
 }
-
-
-

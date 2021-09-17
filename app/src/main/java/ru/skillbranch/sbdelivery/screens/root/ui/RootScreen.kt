@@ -41,7 +41,6 @@ fun RootScreen(vm: RootViewModel) {
     )
 }
 
-
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 @Composable
@@ -59,7 +58,6 @@ fun ContentHost(vm: RootViewModel) {
 
 }
 
-
 @Composable
 fun Navigation(
     currentScreen: ScreenState,
@@ -73,7 +71,6 @@ fun Navigation(
             content(currentScreen)
         }
     }
-
 }
 
 @ExperimentalComposeUiApi

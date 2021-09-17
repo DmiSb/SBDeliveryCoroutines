@@ -45,7 +45,7 @@ fun CartScreen(state: CartFeature.State, accept: (CartFeature.Msg) -> Unit) {
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Row {
-                        val total = state.list.dishes.sumBy { it.count * it.price }
+                        val total = state.list.dishes.sumOf { it.count * it.price }
                         Text(
                             "Итого",
                             fontSize = 24.sp,
@@ -65,10 +65,9 @@ fun CartScreen(state: CartFeature.State, accept: (CartFeature.Msg) -> Unit) {
 
                     Button(
                         onClick = {
-                            val order = mutableMapOf<String, Int>()
-                            state.list.dishes.forEach { dish ->
-                                order[dish.id] = dish.count
-                            }
+                            val order = state.list.dishes.map {
+                                it.id to it.count
+                            }.toMap()
                             accept(CartFeature.Msg.SendOrder(order))
                         },
                         colors = ButtonDefaults.buttonColors(
@@ -117,7 +116,7 @@ fun CartScreen(state: CartFeature.State, accept: (CartFeature.Msg) -> Unit) {
                     }
                     TextButton(
                         onClick = {
-                            accept(CartFeature.Msg.RemoveFromCart(state.confirmDialog.id))
+                            accept(CartFeature.Msg.RemoveFromCart(dishId = state.confirmDialog.id))
                         },
                         modifier = Modifier.weight(1f)
                     ) {

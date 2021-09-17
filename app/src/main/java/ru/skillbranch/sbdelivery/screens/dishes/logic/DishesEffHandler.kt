@@ -3,7 +3,6 @@ package ru.skillbranch.sbdelivery.screens.dishes.logic
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import ru.skillbranch.sbdelivery.repository.DishesRepository
 import ru.skillbranch.sbdelivery.screens.root.logic.Eff
 import ru.skillbranch.sbdelivery.screens.root.logic.IEffectHandler
@@ -23,7 +22,7 @@ class DishesEffHandler @Inject constructor(
                 commit(Msg.UpdateCartCount(count))
                 notifyChannel.send(
                     Eff.Notification.Action(
-                        message = "${effect.title} добавлен в корзину",
+                        message = "${effect.title} успешно добавлен в корзину",
                         label = "Отмена",
                         action = Msg.Dishes(
                             DishesFeature.Msg.RemoveFromCart(
@@ -53,9 +52,8 @@ class DishesEffHandler @Inject constructor(
                 commit(DishesFeature.Msg.ShowSuggestions(suggestions).toMsg())
             }
 
-
             is DishesFeature.Eff.SearchDishes -> {
-                delay(3000)
+               // delay(3000)
                 commit(DishesFeature.Msg.ShowLoading.toMsg())
                 val dishes = repository.searchDishes(effect.query)
                 commit(DishesFeature.Msg.ShowDishes(dishes).toMsg())

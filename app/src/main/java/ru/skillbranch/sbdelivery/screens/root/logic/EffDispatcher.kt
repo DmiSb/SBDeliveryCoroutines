@@ -49,6 +49,16 @@ class EffDispatcher @Inject constructor(
             }
             is Eff.Cmd -> _commandChannel.send(effect.cmd)
 
+            is Eff.AddToCart -> {
+                rootRepository.addDishToCart(effect.id)
+                _notifyChannel.send(
+                    Eff.Notification.Action(
+                        "${effect.title} успешно добавлен в корзину",
+                        label = "Отмена",
+                        action = Msg.RemoveFromCart(effect.id, effect.title)
+                    )
+                )
+            }
         }
     }
 }

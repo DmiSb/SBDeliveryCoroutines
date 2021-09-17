@@ -78,6 +78,9 @@ object RootFeature {
             //navigation
             msg is Msg.Navigate -> root.reduceNavigate(msg.cmd)
 
+            msg is Msg.AddToCart -> root to setOf(Eff.AddToCart(msg.id, msg.title))
+
+
             else -> root to emptySet()
         }
 }
@@ -124,6 +127,9 @@ sealed class Msg {
     //Root mutation
     data class UpdateCartCount(val count: Int) : Msg()
 
+    data class AddToCart(val id: String, val title: String) : Msg()
+    data class RemoveFromCart(val id: String, val title: String) : Msg()
+    data class ClickDish(val id: String, val title: String) : Msg()
 }
 
 sealed class Eff {
@@ -146,6 +152,12 @@ sealed class Eff {
 
     //root effects
     object SyncCounter : Eff()
+
+    //Global
+    data class ToggleLike(val id: String, val isFavorite: Boolean) : Eff()
+    data class AddToCart(val id: String, val title: String) : Eff()
+    data class RemoveFromCart(val id: String, val title: String) : Eff()
+
 
     data class Navigate(val cmd: NavigateCommand) : Eff()
     data class Cmd(val cmd: Command) : Eff()
